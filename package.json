@@ -1,0 +1,16 @@
+{
+  "name": "marina-provider",
+  "version": "1.0.0",
+  "description": "Marina injected API",
+  "repository": "git@github.com:vulpemventures/marina-provider.git",
+  "author": "Vulpem Ventures",
+  "license": "MIT",
+  "types": "index.d.ts",
+  "files": [
+    "index.d.ts",
+    "index.ts"
+  ],
+  "scripts": {
+    "prepare": "tsc --declaration"
+  }
+}
