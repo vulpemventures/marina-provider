@@ -4,6 +4,16 @@ export interface AddressInterface {
   derivationPath?: string;
 }
 
+export interface SignedMessage {
+  signature: SignatureBase64;
+  address: NativeSegwitAddress;
+}
+
+export type TransactionHash = string;
+export type PsetBase64 = string;
+export type SignatureBase64 = string;
+export type NativeSegwitAddress = string;
+
 
 export interface MarinaProvider {
   enable(): Promise<void>;
@@ -26,9 +36,11 @@ export interface MarinaProvider {
     recipientAddress: string,
     amountInSatoshis: number,
     assetHash: string
-  ): Promise<string>;
+  ): Promise<TransactionHash>;
 
-  blindTransaction(psetBase64: string): Promise<string>;
+  blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
-  signTransaction(psetBase64: string): Promise<string>;
+  signTransaction(pset: PsetBase64): Promise<PsetBase64>;
+
+  signMessage(message: string): Promise<SignedMessage>;
 }
