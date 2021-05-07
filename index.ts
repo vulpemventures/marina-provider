@@ -9,7 +9,7 @@ export interface SignedMessage {
   address: NativeSegwitAddress;
 }
 
-export type TransactionHash = string;
+export type TransactionHex = string;
 export type PsetBase64 = string;
 export type SignatureBase64 = string;
 export type NativeSegwitAddress = string;
@@ -36,7 +36,7 @@ export interface MarinaProvider {
     recipientAddress: string,
     amountInSatoshis: number,
     assetHash: string
-  ): Promise<TransactionHash>;
+  ): Promise<TransactionHex>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
