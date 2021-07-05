@@ -40,7 +40,7 @@ export interface Balance {
   amount: number;
 }
 
-export type MarinaEventType = 'new_utxo' | 'new_tx' | 'spent_utxo';
+export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED';
 
 export type TransactionHex = string;
 export type PsetBase64 = string;
