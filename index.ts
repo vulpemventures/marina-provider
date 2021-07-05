@@ -40,20 +40,7 @@ export interface Balance {
   amount: number;
 }
 
-export enum MarinaEventType {
-  NEW_UTXO = 'NEW_UTXO',
-  NEW_TX = 'NEW_TX',
-  SPENT_UTXO = 'SPENT_UTXO',
-  ENABLED = 'ENABLED',
-  DISABLED = 'DISABLED',
-}
-
-export type Payload<T extends MarinaEventType> =
-  T extends MarinaEventType.NEW_TX ? Transaction
-  : T extends MarinaEventType.NEW_UTXO ? Utxo
-  : T extends MarinaEventType.SPENT_UTXO ? { txid: string; vout: number; }
-  : T extends MarinaEventType.ENABLED | MarinaEventType.DISABLED ? { network: string; hostname: string; }
-  : any
+export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED';
 
 export type TransactionHex = string;
 export type PsetBase64 = string;
@@ -95,5 +82,5 @@ export interface MarinaProvider {
 
   getBalances(): Promise<Balance[]>;
 
-  on(type: MarinaEventType, callback: (payload: Payload<typeof type>) => void): void;
+  on(type: MarinaEventType, callback: (payload: any) => void): void;
 }
