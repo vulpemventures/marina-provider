@@ -42,11 +42,17 @@ export interface Balance {
 
 export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED';
 
+export type Payload<T extends MarinaEventType> =
+  T extends 'NEW_TX' ? Transaction
+  : T extends 'NEW_UTXO' ? Utxo
+  : T extends 'SPENT_UTXO' ? { txid: string; vout: number; }
+  : T extends 'ENABLED' | 'DISABLED' ? { network: string; hostname: string; }
+  : any
+
 export type TransactionHex = string;
 export type PsetBase64 = string;
 export type SignatureBase64 = string;
 export type NativeSegwitAddress = string;
-
 
 export interface MarinaProvider {
   enable(): Promise<void>;
@@ -83,5 +89,5 @@ export interface MarinaProvider {
 
   getBalances(): Promise<Balance[]>;
 
-  on(type: MarinaEventType, callback: (payload: any) => void): void;
+  on(type: MarinaEventType, callback: (payload: Payload<typeof type>) => void): void;
 }
