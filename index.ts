@@ -40,13 +40,19 @@ export interface Balance {
   amount: number;
 }
 
-export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED';
+export enum MarinaEventType {
+  NEW_UTXO = 'NEW_UTXO',
+  NEW_TX = 'NEW_TX',
+  SPENT_UTXO = 'SPENT_UTXO',
+  ENABLED = 'ENABLED',
+  DISABLED = 'DISABLED',
+}
 
 export type Payload<T extends MarinaEventType> =
-  T extends 'NEW_TX' ? Transaction
-  : T extends 'NEW_UTXO' ? Utxo
-  : T extends 'SPENT_UTXO' ? { txid: string; vout: number; }
-  : T extends 'ENABLED' | 'DISABLED' ? { network: string; hostname: string; }
+  T extends MarinaEventType.NEW_TX ? Transaction
+  : T extends MarinaEventType.NEW_UTXO ? Utxo
+  : T extends MarinaEventType.SPENT_UTXO ? { txid: string; vout: number; }
+  : T extends MarinaEventType.ENABLED | MarinaEventType.DISABLED ? { network: string; hostname: string; }
   : any
 
 export type TransactionHex = string;
