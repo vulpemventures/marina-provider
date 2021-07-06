@@ -7,6 +7,37 @@ export interface SignedMessage {
     signature: SignatureBase64;
     address: NativeSegwitAddress;
 }
+export declare enum TxStatusEnum {
+    Confirmed = 1,
+    Pending = 0
+}
+export interface Transaction {
+    txId: string;
+    status: TxStatusEnum;
+    fee: number;
+    transfers: Array<{
+        asset: string;
+        amount: number;
+    }>;
+    explorerURL: string;
+    blocktimeMs: number;
+}
+export interface Utxo {
+    txid: string;
+    vout: number;
+    asset?: string;
+    value?: number;
+}
+export interface Balance {
+    asset: {
+        assetHash: string;
+        ticker?: string;
+        name?: string;
+        precision: number;
+    };
+    amount: number;
+}
+export declare type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED' | 'NETWORK';
 export declare type TransactionHex = string;
 export declare type PsetBase64 = string;
 export declare type SignatureBase64 = string;
@@ -24,4 +55,8 @@ export interface MarinaProvider {
     blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
     signTransaction(pset: PsetBase64): Promise<PsetBase64>;
     signMessage(message: string): Promise<SignedMessage>;
+    getCoins(): Promise<Utxo[]>;
+    getTransactions(): Promise<Transaction[]>;
+    getBalances(): Promise<Balance[]>;
+    on(type: MarinaEventType, callback: (payload: any) => void): void;
 }
