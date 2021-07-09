@@ -42,6 +42,7 @@ export declare type TransactionHex = string;
 export declare type PsetBase64 = string;
 export declare type SignatureBase64 = string;
 export declare type NativeSegwitAddress = string;
+export declare type EventListenerID = string;
 export interface MarinaProvider {
     enable(): Promise<void>;
     disable(): Promise<void>;
@@ -58,5 +59,6 @@ export interface MarinaProvider {
     getCoins(): Promise<Utxo[]>;
     getTransactions(): Promise<Transaction[]>;
     getBalances(): Promise<Balance[]>;
-    on(type: MarinaEventType, callback: (payload: any) => void): void;
+    on(type: MarinaEventType, callback: (payload: any) => void): EventListenerID;
+    off(listenerId: EventListenerID): void;
 }
