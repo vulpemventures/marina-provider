@@ -66,5 +66,5 @@ export interface MarinaProvider {
     getBalances(): Promise<Balance[]>;
     on(type: MarinaEventType, callback: (payload: any) => void): EventListenerID;
     off(listenerId: EventListenerID): void;
-    getTaxiAssets(): Promise<string[]>;
+    getFeeAssets(): Promise<string[]>;
 }

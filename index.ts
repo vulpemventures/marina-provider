@@ -92,5 +92,5 @@ export interface MarinaProvider {
 
   off(listenerId: EventListenerID): void;
 
-  getTaxiAssets(): Promise<string[]>;
+  getFeeAssets(): Promise<string[]>;
 }
