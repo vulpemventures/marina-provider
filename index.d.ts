@@ -37,6 +37,11 @@ export interface Balance {
     };
     amount: number;
 }
+export interface Recipient {
+    address: string;
+    value: number;
+    asset: string;
+}
 export declare type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED' | 'NETWORK';
 export declare type TransactionHex = string;
 export declare type PsetBase64 = string;
@@ -52,7 +57,7 @@ export interface MarinaProvider {
     getAddresses(): Promise<AddressInterface[]>;
     getNextAddress(): Promise<AddressInterface>;
     getNextChangeAddress(): Promise<AddressInterface>;
-    sendTransaction(recipientAddress: string, amountInSatoshis: number, assetHash: string): Promise<TransactionHex>;
+    sendTransaction(recipients: Recipient[], feeAsset?: string): Promise<TransactionHex>;
     blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
     signTransaction(pset: PsetBase64): Promise<PsetBase64>;
     signMessage(message: string): Promise<SignedMessage>;
@@ -61,4 +66,5 @@ export interface MarinaProvider {
     getBalances(): Promise<Balance[]>;
     on(type: MarinaEventType, callback: (payload: any) => void): EventListenerID;
     off(listenerId: EventListenerID): void;
+    getTaxiAssets(): string[];
 }
