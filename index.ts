@@ -40,6 +40,12 @@ export interface Balance {
   amount: number;
 }
 
+export interface Recipient {
+  address: string; // the recipient address
+  value: number; // the amount of sats to send
+  asset: string; // the asset to send
+}
+
 export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED' | 'NETWORK';
 
 export type TransactionHex = string;
@@ -66,9 +72,8 @@ export interface MarinaProvider {
   getNextChangeAddress(): Promise<AddressInterface>;
 
   sendTransaction(
-    recipientAddress: string,
-    amountInSatoshis: number,
-    assetHash: string
+    recipients: Recipient[],
+    feeAsset?: string,
   ): Promise<TransactionHex>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
@@ -86,4 +91,6 @@ export interface MarinaProvider {
   on(type: MarinaEventType, callback: (payload: any) => void): EventListenerID;
 
   off(listenerId: EventListenerID): void;
+
+  getFeeAssets(): Promise<string[]>;
 }

@@ -12,5 +12,8 @@
   ],
   "scripts": {
     "prepare": "tsc --declaration"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.3"
   }
 }
