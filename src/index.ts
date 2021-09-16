@@ -18,7 +18,7 @@ export interface Transaction {
   txId: string;
   status: TxStatusEnum;
   fee: number;
-  transfers: Array<{ asset: string; amount: number; }>;
+  transfers: Array<{ asset: string; amount: number }>;
   explorerURL: string;
   blocktimeMs: number;
 }
@@ -36,7 +36,7 @@ export interface Balance {
     ticker?: string;
     name?: string;
     precision: number;
-  },
+  };
   amount: number;
 }
 
@@ -46,7 +46,13 @@ export interface Recipient {
   asset: string; // the asset to send
 }
 
-export type MarinaEventType = 'NEW_UTXO' | 'NEW_TX' | 'SPENT_UTXO' | 'ENABLED' | 'DISABLED' | 'NETWORK';
+export type MarinaEventType =
+  | 'NEW_UTXO'
+  | 'NEW_TX'
+  | 'SPENT_UTXO'
+  | 'ENABLED'
+  | 'DISABLED'
+  | 'NETWORK';
 
 export type TransactionHex = string;
 export type PsetBase64 = string;
@@ -73,7 +79,7 @@ export interface MarinaProvider {
 
   sendTransaction(
     recipients: Recipient[],
-    feeAsset?: string,
+    feeAsset?: string
   ): Promise<TransactionHex>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
@@ -93,4 +99,57 @@ export interface MarinaProvider {
   off(listenerId: EventListenerID): void;
 
   getFeeAssets(): Promise<string[]>;
+}
+
+/**
+ * listen with timeout the `providerName#initialized` event
+ * @param provider the name of the provider to detect "marina" for window.marina
+ * @param timeout configurable timeout, default is 3000 (expressed in milliseconds)
+ */
+export async function detectProvider<T = MarinaProvider>(
+  provider: string = 'marina',
+  timeout: number = 3000
+): Promise<T> {
+  let handled = false;
+  let windowObject = window as any;
+
+  return new Promise<T>((resolve, reject) => {
+    if (windowObject[provider]) {
+      handleProvider();
+    } else {
+      window.addEventListener(`${provider}#initialized`, handleProvider, {
+        once: true,
+      });
+
+      setTimeout(() => {
+        handleProvider();
+      }, timeout);
+    }
+
+    function handleProvider() {
+      if (handled) return;
+      handled = true;
+
+      window.removeEventListener(`${provider}#initialized`, handleProvider);
+      if (typeof windowObject[provider] !== 'undefined') {
+        resolve(windowObject[provider]);
+        return;
+      }
+
+      reject(new DetectProviderTimeoutError(provider, timeout));
+    }
+  });
+}
+
+export class DetectProviderTimeoutError extends Error {
+  provider: string;
+  timeout: number;
+
+  constructor(provider: string, timeout: number) {
+    super(
+      `detectProviderTimeout: detection of ${provider} timeout (${timeout} ms)`
+    );
+    this.provider = provider;
+    this.timeout = timeout;
+  }
 }

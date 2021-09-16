@@ -5,15 +5,25 @@
   "repository": "git@github.com:vulpemventures/marina-provider.git",
   "author": "Vulpem Ventures",
   "license": "MIT",
-  "types": "index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "files": [
-    "index.d.ts",
-    "index.ts"
+    "dist"
   ],
   "scripts": {
-    "prepare": "tsc --declaration"
+    "lint": "tsdx lint src",
+    "lint:fix": "tsdx lint src --fix",
+    "build": "tsdx build --tsconfig tsconfig.json --entry src/index.ts",
+    "prepare": "tsdx build --tsconfig tsconfig.json --entry src/index.ts"
   },
   "devDependencies": {
+    "tsdx": "^0.14.1",
     "typescript": "^4.4.3"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
