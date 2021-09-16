@@ -10,14 +10,12 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
     "lint": "tsdx lint src",
     "lint:fix": "tsdx lint src --fix",
     "build": "tsdx build --tsconfig tsconfig.json --entry src/index.ts",
-    "prepare": "yarn run build"
+    "prepare": "yarn run build",
+    "prepack": "yarn run build"
   },
   "devDependencies": {
     "tsdx": "^0.14.1",
