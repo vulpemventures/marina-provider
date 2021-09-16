@@ -5,8 +5,8 @@
   "repository": "git@github.com:vulpemventures/marina-provider.git",
   "author": "Vulpem Ventures",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
