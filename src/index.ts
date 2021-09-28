@@ -7,6 +7,7 @@ export interface AddressInterface {
 export interface SignedMessage {
   signature: SignatureBase64;
   address: NativeSegwitAddress;
+  publicKey: ECPublicKey;
 }
 
 export enum TxStatusEnum {
@@ -58,6 +59,7 @@ export type TransactionHex = string;
 export type PsetBase64 = string;
 export type SignatureBase64 = string;
 export type NativeSegwitAddress = string;
+export type ECPublicKey = string;
 export type EventListenerID = string;
 
 export interface MarinaProvider {
