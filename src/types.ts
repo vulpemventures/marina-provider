@@ -42,12 +42,15 @@ export interface Balance {
 }
 
 // add an OP_RETURN output
-export interface DataRecipient {
+export type DataRecipient = {
   data: string;
-}
+} & AssetValue;
 
-export interface AddressRecipient {
+export type AddressRecipient = {
   address: string; // the recipient address
+} & AssetValue;
+
+interface AssetValue {
   value: number; // the amount of sats to send
   asset: string; // the asset to send
 }

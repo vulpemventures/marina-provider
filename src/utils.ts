@@ -65,11 +65,5 @@ export function isAddressRecipient(
   recipient: Recipient
 ): recipient is AddressRecipient {
   const address = (recipient as AddressRecipient).address;
-  const value = (recipient as AddressRecipient).value;
-  return (
-    address !== undefined &&
-    typeof address === 'string' &&
-    value !== undefined &&
-    typeof value === 'number'
-  );
+  return address !== undefined && typeof address === 'string';
 }
