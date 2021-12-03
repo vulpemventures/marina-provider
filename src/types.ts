@@ -71,3 +71,5 @@ export type SignatureBase64 = string;
 export type NativeSegwitAddress = string;
 export type ECPublicKey = string;
 export type EventListenerID = string;
+
+export type NetworkString = 'mainnet' | 'testnet' | 'regtest';
