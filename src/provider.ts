@@ -3,6 +3,7 @@ import {
   Balance,
   EventListenerID,
   MarinaEventType,
+  NetworkString,
   PsetBase64,
   Recipient,
   SignedMessage,
@@ -24,7 +25,7 @@ export interface MarinaProvider {
 
   setAccount(account: number): Promise<void>;
 
-  getNetwork(): Promise<'liquid' | 'regtest'>;
+  getNetwork(): Promise<NetworkString>;
 
   getAddresses(): Promise<AddressInterface[]>;
 
