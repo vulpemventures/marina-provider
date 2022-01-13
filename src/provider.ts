@@ -8,7 +8,7 @@ import {
   Recipient,
   SignedMessage,
   Transaction,
-  TransactionHex,
+  TransactionID,
   Utxo,
 } from './types';
 
@@ -36,7 +36,7 @@ export interface MarinaProvider {
   sendTransaction(
     recipients: Recipient[],
     feeAsset?: string
-  ): Promise<TransactionHex>;
+  ): Promise<TransactionID>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 

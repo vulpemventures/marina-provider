@@ -65,7 +65,7 @@ export type MarinaEventType =
   | 'DISABLED'
   | 'NETWORK';
 
-export type TransactionHex = string;
+export type TransactionID = string;
 export type PsetBase64 = string;
 export type SignatureBase64 = string;
 export type NativeSegwitAddress = string;
