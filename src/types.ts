@@ -2,6 +2,7 @@ export interface AddressInterface {
   confidentialAddress: string;
   blindingPrivateKey: string;
   derivationPath?: string;
+  publicKey?: ECPublicKey;
 }
 
 export interface SignedMessage {
