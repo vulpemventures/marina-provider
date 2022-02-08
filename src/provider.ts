@@ -55,4 +55,6 @@ export interface MarinaProvider {
   off(listenerId: EventListenerID): void;
 
   getFeeAssets(): Promise<string[]>;
+
+  reloadCoins(): Promise<void>;
 }
