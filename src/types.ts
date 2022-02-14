@@ -74,3 +74,9 @@ export type ECPublicKey = string;
 export type EventListenerID = string;
 
 export type NetworkString = 'liquid' | 'testnet' | 'regtest';
+
+// return object from sendTransaction
+export interface SentTransaction {
+  txid: TransactionID;
+  hex: PsetBase64;
+}
