@@ -6,9 +6,9 @@ import {
   NetworkString,
   PsetBase64,
   Recipient,
+  SentTransaction,
   SignedMessage,
   Transaction,
-  TransactionID,
   Utxo,
 } from './types';
 
@@ -36,7 +36,7 @@ export interface MarinaProvider {
   sendTransaction(
     recipients: Recipient[],
     feeAsset?: string
-  ): Promise<TransactionID>;
+  ): Promise<SentTransaction>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
