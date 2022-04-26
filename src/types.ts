@@ -25,9 +25,28 @@ export interface Transaction {
   blocktimeMs: number;
 }
 
+// from liquidjs-lib
+interface TxOutput {
+  asset: Buffer;
+  nonce: Buffer;
+  script: Buffer;
+  value: Buffer;
+  rangeProof?: Buffer;
+  surjectionProof?: Buffer;
+}
+
+// from liquidjs-lib
+interface UnblindOutputResult {
+  asset: Buffer;
+  assetBlindingFactor: Buffer;
+  value: string;
+  valueBlindingFactor: Buffer;
+}
 export interface Utxo {
   txid: string;
   vout: number;
+  prevout: TxOutput;
+  unblindData: UnblindOutputResult;
   asset?: string;
   value?: number;
 }
