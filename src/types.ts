@@ -100,3 +100,8 @@ export interface SentTransaction {
   txid: TransactionID;
   hex: RawHex;
 }
+
+export interface DescriptorTemplate {
+  type: 'marina-descriptors';
+  template: string;
+}
