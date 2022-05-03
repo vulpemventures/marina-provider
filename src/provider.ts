@@ -6,6 +6,7 @@ import {
   MarinaEventType,
   NetworkString,
   PsetBase64,
+  RawHex,
   Recipient,
   SentTransaction,
   SignedMessage,
@@ -83,5 +84,5 @@ export interface MarinaProvider {
   // broadcast transaction sent by user
   // check inputs for used coins and lock them
   // check outputs for unconfirmed utxos and credit them
-  broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>
+  broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>;
 }
