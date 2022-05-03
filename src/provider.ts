@@ -71,6 +71,7 @@ export interface MarinaProvider {
   ): Promise<SentTransaction>;
 
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
+
   // signs input(s) owned by the current account
   signTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
@@ -78,4 +79,9 @@ export interface MarinaProvider {
 
   // force marina to start an update for the current account
   reloadCoins(): Promise<void>;
+
+  // broadcast transaction sent by user
+  // check inputs for used coins and lock them
+  // check outputs for unconfirmed utxos and credit them
+  broadcastTransaction(signedTxHex: string): Promise<SentTransaction>
 }
