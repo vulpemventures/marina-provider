@@ -83,5 +83,5 @@ export interface MarinaProvider {
   // broadcast transaction sent by user
   // check inputs for used coins and lock them
   // check outputs for unconfirmed utxos and credit them
-  broadcastTransaction(signedTxHex: string): Promise<SentTransaction>
+  broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>
 }
