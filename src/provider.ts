@@ -71,7 +71,7 @@ export interface MarinaProvider {
   broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>;
 
   // TODO implement blindTransaction
-  // blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
+  blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
   // select an account
   // return true if the account is ready to be used,
