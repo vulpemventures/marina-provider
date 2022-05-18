@@ -1,4 +1,5 @@
 import {
+  AccountID,
   AddressInterface,
   Balance,
   DescriptorTemplate,
@@ -39,15 +40,43 @@ export interface MarinaProvider {
   // return the assets accepted as network fees
   getFeeAssets(): Promise<string[]>;
   // which account is currently selected
-  getSelectedAccount(): Promise<string>;
+  getSelectedAccount(): Promise<AccountID>;
+  // return the list of accounts
+  getAccountsIDs(): Promise<AccountID[]>;
 
-  createAccount(accountName: string): Promise<void>;
+  // create a new account, accountID must be unique
+  // ask the user to unlock the wallet and generate a new sub-privatekey depending on the accountID (SLIP13)
+  // use importTemplate to set up the account's descriptor(s)
+  createAccount(accountID: AccountID): Promise<void>;
+
+  // getters with no param = get for all accounts
+  getBalances(accountIDs?: AccountID[]): Promise<Balance[]>;
+  getCoins(accountIDs?: AccountID[]): Promise<Utxo[]>;
+  getTransactions(accountIDs?: AccountID[]): Promise<Transaction[]>;
+  getAddresses(accountIDs?: AccountID[]): Promise<AddressInterface[]>;
+  // reloadCoins can be used to launch an update task for a given account list
+  reloadCoins(accountIDs?: AccountID[]): Promise<void>;
+
+  // coinselect coins from the account's utxo list
+  // try to blind and sign if necessary, then broadcast the transaction
+  sendTransaction(
+    recipients: Recipient[],
+    feeAsset?: string
+  ): Promise<SentTransaction>;
+  // signs input(s) of the pset owned by any accounts
+  signTransaction(pset: PsetBase64): Promise<PsetBase64>;
+  // broadcast transaction sent by user
+  // check inputs for used coins and lock them
+  // check outputs for unconfirmed utxos and credit them
+  broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>;
+
+  // TODO implement blindTransaction
+  blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
   // select an account
   // return true if the account is ready to be used,
   // false if u need to set up the script templates
-  useAccount(account: string): Promise<boolean>;
-
+  useAccount(accountID: AccountID): Promise<boolean>;
   /** all the methods above apply to the selected account **/
 
   // set up descriptor templates for the current account
@@ -58,31 +87,9 @@ export interface MarinaProvider {
     changeTemplate?: DescriptorTemplate
   ): Promise<void>;
 
-  getBalances(): Promise<Balance[]>;
-  getCoins(): Promise<Utxo[]>;
-  getTransactions(): Promise<Transaction[]>;
-
+  // get next (change) address for the current selected account
   getNextAddress(): Promise<AddressInterface>;
   getNextChangeAddress(): Promise<AddressInterface>;
-  getAddresses(): Promise<AddressInterface[]>;
-
-  sendTransaction(
-    recipients: Recipient[],
-    feeAsset?: string
-  ): Promise<SentTransaction>;
-
-  blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
-
-  // signs input(s) owned by the current account
-  signTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
   signMessage(message: string): Promise<SignedMessage>;
-
-  // force marina to start an update for the current account
-  reloadCoins(): Promise<void>;
-
-  // broadcast transaction sent by user
-  // check inputs for used coins and lock them
-  // check outputs for unconfirmed utxos and credit them
-  broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>;
 }

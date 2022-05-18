@@ -105,3 +105,5 @@ export interface DescriptorTemplate {
   type: 'marina-descriptors';
   template: string;
 }
+
+export type AccountID = string;
