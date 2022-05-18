@@ -52,8 +52,8 @@ export interface MarinaProvider {
   // getters with no param = get for all accounts
   getBalances(accountIDs?: AccountID[]): Promise<Balance[]>;
   getCoins(accountIDs?: AccountID[]): Promise<Utxo[]>;
-  getTransactions(accountIDs?: AccountID): Promise<Transaction[]>;
-  getAddresses(accountIDs?: AccountID): Promise<AddressInterface[]>;
+  getTransactions(accountIDs?: AccountID[]): Promise<Transaction[]>;
+  getAddresses(accountIDs?: AccountID[]): Promise<AddressInterface[]>;
   // reloadCoins can be used to launch an update task for a given account list
   reloadCoins(accountIDs?: AccountID[]): Promise<void>;
 
