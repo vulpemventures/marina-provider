@@ -3,7 +3,7 @@ import {
   AccountInfo,
   AddressInterface,
   Balance,
-  DescriptorTemplate,
+  Template,
   EventListenerID,
   MarinaEventType,
   NetworkString,
@@ -47,7 +47,6 @@ export interface MarinaProvider {
   // get public data about an account
   getAccountInfo(accountID: AccountID): Promise<AccountInfo>;
 
-
   // create a new account, accountID must be unique
   // ask the user to unlock the wallet and generate a new sub-privatekey depending on the accountID (SLIP13)
   // use importTemplate to set up the account's descriptor(s)
@@ -86,10 +85,7 @@ export interface MarinaProvider {
   // set up descriptor templates for the current account
   // fails if the account has already a template
   // if not setup, changeTemplate = template
-  importTemplate(
-    template: DescriptorTemplate,
-    changeTemplate?: DescriptorTemplate
-  ): Promise<void>;
+  importTemplate(template: Template, changeTemplate?: Template): Promise<void>;
 
   // get next (change) address for the current selected account
   getNextAddress(): Promise<AddressInterface>;

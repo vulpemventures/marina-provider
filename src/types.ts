@@ -101,9 +101,11 @@ export interface SentTransaction {
   hex: RawHex;
 }
 
-export interface DescriptorTemplate {
-  type: 'marina-descriptors';
-  template: string;
+export type TemplateType = 'marina-descriptors' | 'ionio-artifact';
+
+export interface Template<T = any> {
+  type: TemplateType;
+  template: T;
 }
 
 export type AccountID = string;
