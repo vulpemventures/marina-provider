@@ -101,9 +101,18 @@ export interface SentTransaction {
   hex: RawHex;
 }
 
-export interface DescriptorTemplate {
-  type: 'marina-descriptors';
-  template: string;
+export type TemplateType = 'marina-descriptors' | 'ionio-artifact';
+
+export interface Template<T = any> {
+  type: TemplateType;
+  template: T;
 }
 
 export type AccountID = string;
+
+export interface AccountInfo {
+  accountID: AccountID;
+  masterXPub: string;
+  isReady: boolean; // true if the account can receive/send transactions
+  [key: string]: any; // any other key is a custom field (depends on account type)
+}
