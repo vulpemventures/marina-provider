@@ -1,5 +1,6 @@
 import {
   AccountID,
+  AccountInfo,
   AddressInterface,
   Balance,
   DescriptorTemplate,
@@ -43,6 +44,9 @@ export interface MarinaProvider {
   getSelectedAccount(): Promise<AccountID>;
   // return the list of accounts
   getAccountsIDs(): Promise<AccountID[]>;
+  // get public data about an account
+  getAccountInfo(accountID: AccountID): Promise<AccountInfo>;
+
 
   // create a new account, accountID must be unique
   // ask the user to unlock the wallet and generate a new sub-privatekey depending on the accountID (SLIP13)
