@@ -88,8 +88,8 @@ export interface MarinaProvider {
   importTemplate(template: Template, changeTemplate?: Template): Promise<void>;
 
   // get next (change) address for the current selected account
-  getNextAddress(): Promise<AddressInterface>;
-  getNextChangeAddress(): Promise<AddressInterface>;
+  getNextAddress(constructorParams?: any): Promise<AddressInterface>;
+  getNextChangeAddress(constructorParams?: any): Promise<AddressInterface>;
 
   signMessage(message: string): Promise<SignedMessage>;
 }
