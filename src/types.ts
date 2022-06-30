@@ -103,7 +103,7 @@ export interface SentTransaction {
 
 export type TemplateString = string;
 
-export type TemplateType = 'marina-descriptors' | 'ionio-artifact';
+export type TemplateType = 'ionio-artifact';
 
 export interface Template<T = any> {
   type: TemplateType;
