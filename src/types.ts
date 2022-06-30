@@ -101,6 +101,8 @@ export interface SentTransaction {
   hex: RawHex;
 }
 
+export type TemplateString = string;
+
 export type TemplateType = 'marina-descriptors' | 'ionio-artifact';
 
 export interface Template<T = any> {

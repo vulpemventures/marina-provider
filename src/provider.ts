@@ -14,6 +14,7 @@ import {
   SignedMessage,
   Transaction,
   Utxo,
+  TemplateString,
 } from './types';
 
 /**
@@ -88,8 +89,8 @@ export interface MarinaProvider {
   importTemplate(template: Template, changeTemplate?: Template): Promise<void>;
 
   // get next (change) address for the current selected account
-  getNextAddress(constructorParams?: any): Promise<AddressInterface>;
-  getNextChangeAddress(constructorParams?: any): Promise<AddressInterface>;
+  getNextAddress(constructorParams?: Record<TemplateString, string|number>): Promise<AddressInterface>;
+  getNextChangeAddress(constructorParams?: Record<TemplateString, string|number>): Promise<AddressInterface>;
 
   signMessage(message: string): Promise<SignedMessage>;
 }
