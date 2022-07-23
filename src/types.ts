@@ -3,6 +3,8 @@ export interface AddressInterface {
   blindingPrivateKey: string;
   derivationPath?: string;
   publicKey?: ECPublicKey;
+  constructorParams?: Record<string, string | number>;
+  descriptor?: string;
 }
 
 export interface SignedMessage {
