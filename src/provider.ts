@@ -1,9 +1,10 @@
 import {
   AccountID,
   AccountInfo,
-  AddressInterface,
+  AccountType,
+  Address,
+  ArtifactWithConstructorArgs,
   Balance,
-  Template,
   EventListenerID,
   MarinaEventType,
   NetworkString,
@@ -14,7 +15,6 @@ import {
   SignedMessage,
   Transaction,
   Utxo,
-  TemplateString,
 } from './types';
 
 /**
@@ -50,16 +50,13 @@ export interface MarinaProvider {
 
   // create a new account, accountID must be unique
   // ask the user to unlock the wallet and generate a new sub-privatekey depending on the accountID (SLIP13)
-  // use importTemplate to set up the account's descriptor(s)
-  createAccount(accountID: AccountID): Promise<void>;
+  createAccount(accountID: AccountID, accountType: AccountType): Promise<void>;
 
   // getters with no param = get for all accounts
   getBalances(accountIDs?: AccountID[]): Promise<Balance[]>;
   getCoins(accountIDs?: AccountID[]): Promise<Utxo[]>;
   getTransactions(accountIDs?: AccountID[]): Promise<Transaction[]>;
-  getAddresses(accountIDs?: AccountID[]): Promise<AddressInterface[]>;
-  // reloadCoins can be used to launch an update task for a given account list
-  reloadCoins(accountIDs?: AccountID[]): Promise<void>;
+  getAddresses(accountIDs?: AccountID[]): Promise<Address[]>;
 
   // coinselect coins from the account's utxo list
   // try to blind and sign if necessary, then broadcast the transaction
@@ -70,11 +67,9 @@ export interface MarinaProvider {
   // signs input(s) of the pset owned by any accounts
   signTransaction(pset: PsetBase64): Promise<PsetBase64>;
   // broadcast transaction sent by user
-  // check inputs for used coins and lock them
-  // check outputs for unconfirmed utxos and credit them
   broadcastTransaction(signedTxHex: RawHex): Promise<SentTransaction>;
 
-  // TODO implement blindTransaction
+  // blind the outputs belonging to marina accounts
   blindTransaction(pset: PsetBase64): Promise<PsetBase64>;
 
   // select an account
@@ -83,18 +78,15 @@ export interface MarinaProvider {
   useAccount(accountID: AccountID): Promise<boolean>;
   /** all the methods above apply to the selected account **/
 
-  // set up descriptor templates for the current account
-  // fails if the account has already a template
-  // if not setup, changeTemplate = template
-  importTemplate(template: Template, changeTemplate?: Template): Promise<void>;
-
   // get next (change) address for the current selected account
+  // artifact and constructorParams are optional, only used for Ionio accounts
   getNextAddress(
-    constructorParams?: Record<TemplateString, string | number>
-  ): Promise<AddressInterface>;
+    ionioArtifact?: ArtifactWithConstructorArgs
+  ): Promise<Address>;
+
   getNextChangeAddress(
-    constructorParams?: Record<TemplateString, string | number>
-  ): Promise<AddressInterface>;
+    ionioArtifact?: ArtifactWithConstructorArgs
+  ): Promise<Address>;
 
   signMessage(message: string): Promise<SignedMessage>;
 }
