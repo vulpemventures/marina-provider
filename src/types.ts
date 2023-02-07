@@ -37,7 +37,7 @@ export type ArtifactWithConstructorArgs = {
   args: { [name: string]: Argument };
 };
 
-export type IonioScriptDetails = ScriptDetails & ArtifactWithConstructorArgs;
+export type IonioScriptDetails = ScriptDetails & { artifact: Artifact; params: Argument[]; };
 
 export function isIonioScriptDetails(script: ScriptDetails): script is IonioScriptDetails {
   return (script as IonioScriptDetails).artifact !== undefined;
