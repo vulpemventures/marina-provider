@@ -1,4 +1,3 @@
-
 import type { Argument, Artifact, Contract } from "@ionio-lang/ionio";
 import type { TxOutput } from "liquidjs-lib";
 
