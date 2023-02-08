@@ -80,9 +80,7 @@ export interface MarinaProvider {
 
   // get next (change) address for the current selected account
   // artifact and constructorParams are optional, only used for Ionio accounts
-  getNextAddress(
-    ionioArtifact?: ArtifactWithConstructorArgs
-  ): Promise<Address>;
+  getNextAddress(ionioArtifact?: ArtifactWithConstructorArgs): Promise<Address>;
 
   getNextChangeAddress(
     ionioArtifact?: ArtifactWithConstructorArgs
