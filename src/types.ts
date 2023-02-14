@@ -25,7 +25,7 @@ export interface Transaction {
 }
 
 export interface ScriptDetails {
-  network: NetworkString;
+  networks: NetworkString[];
   accountName: string;
   derivationPath?: string;
   blindingPrivateKey?: string;
