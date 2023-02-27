@@ -1,11 +1,15 @@
-export interface AddressInterface {
-  confidentialAddress: string;
-  blindingPrivateKey: string;
-  derivationPath?: string;
-  publicKey?: ECPublicKey;
-  constructorParams?: Record<string, string | number>;
-  descriptor?: string;
-}
+import type { Argument, Artifact, Contract } from "@ionio-lang/ionio";
+import type { TxOutput } from "liquidjs-lib";
+
+export type TransactionID = string;
+export type PsetBase64 = string;
+export type SignatureBase64 = string;
+export type NativeSegwitAddress = string;
+export type ECPublicKey = string;
+export type EventListenerID = string;
+export type RawHex = string;
+export type AccountID = string;
+export type NetworkString = 'liquid' | 'testnet' | 'regtest';
 
 export interface SignedMessage {
   signature: SignatureBase64;
@@ -13,55 +17,51 @@ export interface SignedMessage {
   publicKey: ECPublicKey;
 }
 
-export enum TxStatusEnum {
-  Confirmed = 1,
-  Pending = 0,
-}
-
 export interface Transaction {
   txId: string;
-  status: TxStatusEnum;
-  fee: number;
-  transfers: Array<{ asset: string; amount: number }>;
+  hex?: string;
+  height: number; // 0 means unconfirmed
   explorerURL: string;
-  blocktimeMs: number;
 }
 
-// from liquidjs-lib
-interface TxOutput {
-  asset: Buffer;
-  nonce: Buffer;
-  script: Buffer;
-  value: Buffer;
-  rangeProof?: Buffer;
-  surjectionProof?: Buffer;
+export interface ScriptDetails {
+  networks: NetworkString[];
+  accountName: string;
+  derivationPath?: string;
+  blindingPrivateKey?: string;
 }
 
-// from liquidjs-lib
-interface UnblindOutputResult {
-  asset: Buffer;
-  assetBlindingFactor: Buffer;
-  value: string;
-  valueBlindingFactor: Buffer;
+// data structure sent to getNextAddress in order to compute a Ionio account address
+export type ArtifactWithConstructorArgs = {
+  artifact: Artifact;
+  args: { [name: string]: Argument };
+};
+
+export type IonioScriptDetails = ScriptDetails & { artifact: Artifact; params: Argument[]; };
+
+export function isIonioScriptDetails(script: ScriptDetails): script is IonioScriptDetails {
+  return (script as IonioScriptDetails).artifact !== undefined;
 }
-export interface Utxo {
+
+export type Address = {
+  confidentialAddress: string;
+  contract?: Contract;
+} & ScriptDetails;
+
+export interface UnblindingData {
+  value: number;
+  asset: string;
+  assetBlindingFactor: string;
+  valueBlindingFactor: string;
+};
+
+export interface UnblindedOutput {
   txid: string;
   vout: number;
-  prevout: TxOutput;
-  unblindData: UnblindOutputResult;
-  asset?: string;
-  value?: number;
+  blindingData?: UnblindingData; // optional, if not present it means marina can't unblind the output
 }
 
-export interface Balance {
-  asset: {
-    assetHash: string;
-    ticker?: string;
-    name?: string;
-    precision: number;
-  };
-  amount: number;
-}
+export type Utxo = UnblindedOutput & { witnessUtxo?: TxOutput, scriptDetails?: ScriptDetails };
 
 // add an OP_RETURN output
 export type DataRecipient = {
@@ -72,12 +72,24 @@ export type AddressRecipient = {
   address: string; // the recipient address
 } & AssetValue;
 
+export type Recipient = AddressRecipient | DataRecipient;
+
 interface AssetValue {
   value: number; // the amount of sats to send
   asset: string; // the asset to send
 }
 
-export type Recipient = AddressRecipient | DataRecipient;
+export interface Asset {
+  assetHash: string;
+  name: string;
+  precision: number;
+  ticker: string;
+};
+
+export interface Balance {
+  asset: Asset;
+  amount: number;
+}
 
 export type MarinaEventType =
   | 'NEW_UTXO'
@@ -87,15 +99,6 @@ export type MarinaEventType =
   | 'DISABLED'
   | 'NETWORK';
 
-export type TransactionID = string;
-export type PsetBase64 = string;
-export type SignatureBase64 = string;
-export type NativeSegwitAddress = string;
-export type ECPublicKey = string;
-export type EventListenerID = string;
-export type RawHex = string;
-
-export type NetworkString = 'liquid' | 'testnet' | 'regtest';
 
 // return object from sendTransaction
 export interface SentTransaction {
@@ -103,20 +106,15 @@ export interface SentTransaction {
   hex: RawHex;
 }
 
-export type TemplateString = string;
-
-export type TemplateType = 'ionio-artifact';
-
-export interface Template<T = any> {
-  type: TemplateType;
-  template: T;
+export enum AccountType {
+  P2WPKH = 'p2wpkh',
+  Ionio = 'ionio',
 }
-
-export type AccountID = string;
 
 export interface AccountInfo {
   accountID: AccountID;
+  type: AccountType;
   masterXPub: string;
-  isReady: boolean; // true if the account can receive/send transactions
-  [key: string]: any; // any other key is a custom field (depends on account type)
+  baseDerivationPath: string;
+  accountNetworks: NetworkString[];
 }
