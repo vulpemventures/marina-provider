@@ -17,7 +17,7 @@
     "prepare": "tsdx build --tsconfig tsconfig.json --entry src/index.ts"
   },
   "devDependencies": {
-    "@ionio-lang/ionio": "^0.3.0",
+    "@ionio-lang/ionio": "^0.4.2",
     "liquidjs-lib": "^6.0.2-liquid.23",
     "tsdx": "^0.14.1",
     "typescript": "^4.6.3"

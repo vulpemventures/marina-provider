@@ -917,12 +917,12 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@ionio-lang/ionio@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@ionio-lang/ionio/-/ionio-0.3.0.tgz#dd6aa1e6fcbb90f88ce5b2938cbd47c7ca427a78"
-  integrity sha512-Uz24tOfPRDBoOtv+OjhZElbyeTo5DTHDuIOdDk415AiSK2eL1F+ILaj7G0SBTG2HwOxo8ooEL1xdo412qES0jQ==
+"@ionio-lang/ionio@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@ionio-lang/ionio/-/ionio-0.4.2.tgz#da7563f85dcbe5ec7f7e529d67f44d8833886143"
+  integrity sha512-Z7+Lqf9cyjLQc0U/si+wF3dOwOWGuMVziVGmGigeBOD901ktQ6mLxPwQVqifKFjHm3C5sv3n0RguZotZ4Nb9Pw==
   dependencies:
-    liquidjs-lib "^6.0.2-liquid.23"
+    liquidjs-lib "^6.0.2-liquid.27"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -2405,7 +2405,7 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-ecpair@^2.0.1:
+ecpair@^2.0.1, ecpair@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ecpair/-/ecpair-2.1.0.tgz#673f826b1d80d5eb091b8e2010c6b588e8d2cb45"
   integrity sha512-cL/mh3MtJutFOvFc27GPZE2pWL3a3k4YvzUWEOvilnfZVlH3Jwgx/7d6tlD7/75tNk8TG2m+7Kgtz0SI1tWcqw==
@@ -4274,6 +4274,29 @@ liquidjs-lib@^6.0.2-liquid.23:
     bs58check "^2.0.0"
     create-hash "^1.2.0"
     ecpair "^2.0.1"
+    slip77 "^0.2.0"
+    typeforce "^1.11.3"
+    varuint-bitcoin "^1.1.2"
+    wif "^2.0.1"
+
+liquidjs-lib@^6.0.2-liquid.27:
+  version "6.0.2-liquid.28"
+  resolved "https://registry.yarnpkg.com/liquidjs-lib/-/liquidjs-lib-6.0.2-liquid.28.tgz#34ff5ee694e734cefa0086de3ac75e06a84bf9c5"
+  integrity sha512-xV8BvhgIRmx32zKz4oQUC6c/s6cYGf2PMKyDQcjMJxQ5diiPVBCs7STmI/saFxH0KjdVodhWm52KkemTF9M7hA==
+  dependencies:
+    "@types/randombytes" "^2.0.0"
+    "@types/wif" "^2.0.2"
+    axios "^0.21.1"
+    bech32 "^2.0.0"
+    bip174-liquid "^1.0.3"
+    bip66 "^1.1.0"
+    bitcoin-ops "^1.4.0"
+    bitcoinjs-lib "^6.0.2"
+    bitset "^5.1.1"
+    blech32 "^1.0.1"
+    bs58check "^2.0.0"
+    create-hash "^1.2.0"
+    ecpair "^2.1.0"
     slip77 "^0.2.0"
     typeforce "^1.11.3"
     varuint-bitcoin "^1.1.2"

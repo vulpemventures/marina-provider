@@ -44,8 +44,10 @@ export function isIonioScriptDetails(script: ScriptDetails): script is IonioScri
 }
 
 export type Address = {
-  confidentialAddress: string;
+  confidentialAddress?: string;
+  unconfidentialAddress?: string;
   contract?: Contract;
+  script: string;
 } & ScriptDetails;
 
 export interface UnblindingData {

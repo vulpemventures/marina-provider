@@ -87,4 +87,8 @@ export interface MarinaProvider {
   ): Promise<Address>;
 
   signMessage(message: string): Promise<SignedMessage>;
+
+  // importScript lets to enable update (and unblinding) of a given scriptPubkey
+  // it throws if the account is not AccountType.Ionio type, to generate a p2wsh script, use getNext*Address methods
+  importScript(accountName: AccountID, scriptHex: string, blindingPrivateKey?: string): Promise<void>;
 }
