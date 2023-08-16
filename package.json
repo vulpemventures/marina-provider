@@ -1,6 +1,6 @@
 {
   "name": "marina-provider",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Marina injected API",
   "repository": "git@github.com:vulpemventures/marina-provider.git",
   "author": "Vulpem Ventures",
