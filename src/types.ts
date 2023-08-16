@@ -48,6 +48,7 @@ export type Address = {
   unconfidentialAddress?: string;
   contract?: Contract;
   script: string;
+  publicKey: string; // the public key associated with the derivation path
 } & ScriptDetails;
 
 export interface UnblindingData {
